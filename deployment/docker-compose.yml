@@ -6,7 +6,7 @@ services:
       - "2181"
     hostname: zookeeper
     volumes:
-    - /home/<username>/zookeeper/data:/opt/zookeeper-3.4.13/data
+    - /home/100.25.199.62/zookeeper/data:/opt/zookeeper-3.4.13/data
 
   kafka:
     image: wurstmeister/kafka
@@ -34,9 +34,9 @@ services:
       # So you don't have to use root, but you can if you like
       MYSQL_USER: 'root'
       # You can use whatever password you like
-      MYSQL_PASSWORD: ''
+      MYSQL_PASSWORD: 'Mahomeboy#15'
       # Password for root access
-      MYSQL_ROOT_PASSWORD: ''
+      MYSQL_ROOT_PASSWORD: 'Mahomeboy#15'
     ports:
       # <Port exposed> : < MySQL Port running inside container>
       - '3306:3306'
