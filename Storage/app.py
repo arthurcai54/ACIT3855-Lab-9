@@ -19,6 +19,7 @@ import json
 from pykafka import KafkaClient
 from pykafka.common import OffsetType
 from threading import Thread
+import time
 
 with open('app_conf.yml', 'r') as f:
     app_config = yaml.safe_load(f.read())
@@ -135,8 +136,18 @@ def process_messages():
     """ Process event messages """ 
     hostname = "%s:%d" % (app_config["events"]["hostname"],   
                           app_config["events"]["port"]) 
-    client = KafkaClient(hosts=hostname) 
-    topic = client.topics[str.encode(app_config["events"]["topic"])] 
+    max_num_retries = 0
+    current_retry_count = 0
+
+    while current_retry_count < max_num_retries:
+        try:
+            logger.info("Attempting to connect to Kafa and the current retry count")
+            client = KafkaClient(hosts=hostname) 
+            topic = client.topics[str.encode(app_config["events"]["topic"])] 
+        except:
+            logger.error("connection failed")
+            time.sleep()
+            current_retry_count += 1
      
     # Create a consume on a consumer group, that only reads new messages  
     # (uncommitted messages) when the service re-starts (i.e., it doesn't  
@@ -162,6 +173,9 @@ def process_messages():
  
         # Commit the new message as being read 
         consumer.commit_offsets()
+
+
+
 
 app = connexion.FlaskApp(__name__, specification_dir='')
 app.add_api("amazonAPI.yaml", strict_validation=True, validate_responses=True)
