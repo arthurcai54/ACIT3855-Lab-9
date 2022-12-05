@@ -103,7 +103,7 @@ def getSellItemInfo(start_timestamp, end_timestamp):
 
     session.close()
 
-    logger.info("Query for sold item readings after %s returns %d results" % (timestamp, len(results_list)))
+    logger.info("Query for sold item readings after %s returns %d results" % (start_timestamp, len(results_list)))
     
     return results_list, 200
 
@@ -127,7 +127,7 @@ def getNumSalesInfo(start_timestamp, end_timestamp):
     
     session.close()
 
-    logger.info("Query for number of sales readings after %s returns %d results" % (timestamp, len(results_list)))
+    logger.info("Query for number of sales readings after %s returns %d results" % (start_timestamp, len(results_list)))
     
     return results_list, 200
 
