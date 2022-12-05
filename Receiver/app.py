@@ -28,7 +28,7 @@ def sellItem(body):
 
     logger.info("Received event sellItem request with a trace id of " + trace)
 
-    client = KafkaClient(hosts='100.25.199.62:9092')
+    client = KafkaClient(hosts='54.166.116.77:9092')
     topic = client.topics[str.encode(events)]
     producer = topic.get_sync_producer()
     
@@ -46,7 +46,7 @@ def sales(body):
 
     logger.info("Received event numSales request with a trace id of " + trace)
 
-    client = KafkaClient(hosts='100.25.199.62:9092')
+    client = KafkaClient(hosts='54.166.116.77:9092')
     topic = client.topics[str.encode(events)]
     producer = topic.get_sync_producer()
     
