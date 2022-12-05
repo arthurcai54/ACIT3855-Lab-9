@@ -45,16 +45,16 @@ def populate_stats():
     # read timestamp from query result
     
     timestamp = datetime.now()
-    timestamp_str = str(timestamp.strptime(str(timestamp), "%Y-%m-%d %H:%M:%S.%f"))
+    current_timestamp_str = str(timestamp.strptime(str(timestamp), "%Y-%m-%d %H:%M:%S.%f"))
     
     if latestSaleOfItemStat == None:
     # logger.info("Statistics do not exist")
-        final_stats = SaleOfItemStats(100.00, 5, 3, 10, 100, timestamp_str)  
+        final_stats = SaleOfItemStats(100.00, 5, 3, 10, 100, current_timestamp_str)  
 
     # read all events from the database that have happened since the timestamp
 
     # GET endpoint 1
-    response1 = requests.get("http://localhost:8090/sell?timestamp=" + timestamp_str)
+    response1 = requests.get("http://localhost:8090/sell?start_timestamp=" + final_stats.last_updated + "&end_timestamp=" + current_timestamp_str)
 
     print("RESPONSE 1" + str(response1))
 
@@ -81,7 +81,7 @@ def populate_stats():
     logger.debug("Updated statistics for maximum number of times bought before: " + str(max_num_times_bought))
 
     # GET endpoint 2
-    response2 = requests.get("http://localhost:8090/numsales?timestamp=" + timestamp_str)
+    response2 = requests.get("http://localhost:8090/numsales?start_timestamp=" + final_stats.last_updated + "&end_timestamp=" + current_timestamp_str)
 
     print("RESPONSE 2" + str(response2))
 
